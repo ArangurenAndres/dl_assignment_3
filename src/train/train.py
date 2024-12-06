@@ -3,8 +3,8 @@ import torch.optim as optim
 import torch
 import numpy as np
 import torch.nn.functional as F
-
-def train_model(epochs=2, model=None, criterion=None, optimizer=None, 
+## Question 7. training loop that loops voer batches of 16 instances at a time
+def train_model(epochs=1, model=None, criterion=None, optimizer=None, 
                 train_data=None, train_labels=None, val_data=None, val_labels=None, 
                 batch_size=32):
 

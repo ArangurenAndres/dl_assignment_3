@@ -7,6 +7,8 @@ import torchvision.transforms as transforms
 import json
 from torch.utils.data import DataLoader, TensorDataset
 
+## Question 7. Part 1 , create Train, val datasets 
+
 ## Load the  config json file
 def load_json(file_path):
     with open(file_path,'r') as file:
@@ -80,6 +82,7 @@ if __name__ == "__main__":
 
     # Step 1: Load the train and test DataLoader objects
     train_loader, test_loader = data.load_data()
+    ## Question 7. Part 1
 
     # Step 2: Create in-memory datasets
     train_data, train_labels, val_data, val_labels, test_data, test_labels = data.create_in_memory_dataset()
