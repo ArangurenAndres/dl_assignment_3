@@ -12,6 +12,13 @@
     chmod +x setup.sh
     ./setup.sh
 ```
+## How to make changes to code
+### 1. Once cloned make sure working in last version, then create your working branch and checkout to that specific branch
+```bash
+    git pull
+    git branch <branch_name>
+    git checkout -b <branch_name>
+```
 
 ## Part 2: Implementing a simple Convolutional classfier
 
@@ -45,3 +52,13 @@
     }
 ```
 ### <span style="background-color:blue;">Question 9.Add data augmentation when creating the dataset for the training set</span>
+
+
+
+## Part 3: A variable-resolution classifier
+### <span style="background-color:blue;">Question 10. Data preparation and training loop</span>
+```bash
+    src/utils/formulas.py
+    # Use this function with given parameters
+    get_output_dimension():
+```
