@@ -30,6 +30,7 @@ class Run(Data):
 
 
 
+
         
 if __name__ == "__main__":
     run = Run(epochs=1, learning_rate=0.0001, batch_size=64, transform=transforms.ToTensor())

@@ -1,5 +1,14 @@
 ## 1 How to setup
 
-### To set virtual env and install dependencies run
+### To set up the project environment, follow these steps:
 
-chmod +x setup.sh
+```bash
+   git clone https://github.com/yourusername/yourrepository.git
+   cd yourrepository
+```
+### Run this line
+```bash
+    chmod +x setup.sh
+```
+
+
