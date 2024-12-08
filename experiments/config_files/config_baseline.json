@@ -1,4 +1,6 @@
 {
+    "results_path":"experiments/results",
+    "exp_name":"exp_1_baseline",
     "lr": 0.001,
     "epochs":20,
     "batch_size":32,

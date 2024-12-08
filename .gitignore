@@ -6,3 +6,6 @@ data/MNIST/raw/train-images-idx3-ubyte
 data/MNIST/raw/train-labels-idx1-ubyte
 *.dylib
 venv/
+data/
+models/__pycache__/
+*.pkl

@@ -10,6 +10,7 @@ def train_model(epochs=1, model=None, criterion=None, optimizer=None,
 
     run_loss = []
     val_loss = []
+    val_accuracy = []
     
     # Loop over epochs
     for epoch in tqdm(range(epochs), desc="Training Progress", unit="epoch"):
@@ -51,6 +52,8 @@ def train_model(epochs=1, model=None, criterion=None, optimizer=None,
         with torch.no_grad():
             val_running_loss = 0.0
             val_num_batches = len(val_data) // batch_size
+            correct_preds = 0
+            total_preds = 0
             
             # Create a progress bar for the validation batches
             with tqdm(total=val_num_batches, desc=f"Epoch {epoch + 1}/{epochs} - Validation", position=2, leave=False) as pbar_val:
@@ -64,6 +67,11 @@ def train_model(epochs=1, model=None, criterion=None, optimizer=None,
                     outputs = model(inputs)
                     loss = criterion(outputs, labels)
                     val_running_loss += loss.item()
+
+                    # Compute the validation accuracy
+                    preds = torch.argmax(outputs,dim=1)
+                    correct_preds+=(preds==labels).sum().item()
+                    total_preds+=labels.size(0)
                     
                     pbar_val.update(1)  # Update the validation progress bar
 
@@ -71,8 +79,11 @@ def train_model(epochs=1, model=None, criterion=None, optimizer=None,
             avg_val_loss = val_running_loss / val_num_batches
             val_loss.append(avg_val_loss)
 
+            # Compute validation accuracy
+            val_accuracy_temp = correct_preds / total_preds
+            val_accuracy.append(val_accuracy_temp)
+
         # Print progress for the current epoch
-        tqdm.write(f"Epoch {epoch + 1}/{epochs} - Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}")
 
     print("Finished Training")
-    return run_loss, val_loss
+    return run_loss, val_loss, val_accuracy
