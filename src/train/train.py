@@ -6,27 +6,33 @@ import torch.nn.functional as F
 ## Question 7. training loop that loops voer batches of 16 instances at a time
 def train_model(epochs=1, model=None, criterion=None, optimizer=None, 
                 train_data=None, train_labels=None, val_data=None, val_labels=None, 
-                batch_size=32):
-
+                batch_size=16):
+    # Initialize empty list to store the training loss , validation loss and validation accuracy
     run_loss = []
     val_loss = []
     val_accuracy = []
     
-    # Loop over epochs
+    # Loop over epochs we will use tqdm package which allows to see the progressbar in a defined unit 
     for epoch in tqdm(range(epochs), desc="Training Progress", unit="epoch"):
+        #set the model in training mode
         model.train()  
         running_loss = 0.0
         
-        # Get the number of batches
+        # Get the number of batches for this question the batch size was defined as 16.
+        # thus number of iterations will be just the length of the data divided by the size of the batch
         num_batches = len(train_data) // batch_size
         
         # Create a progress bar for the training batches
         with tqdm(total=num_batches, desc=f"Epoch {epoch + 1}/{epochs} - Training", position=1, leave=False) as pbar_train:
             for i in range(num_batches):
-                # Get the batch index start and end
+                #Since we are iterating over in memory instances instead of dataloaders, 
+                # we will apply indexing to the train and validaiton lists 
                 start_idx = i * batch_size
+                # move unit based on the batch size 
                 end_idx = start_idx + batch_size
+                # Get the batch images
                 inputs = train_data[start_idx:end_idx]
+                # Get the batch labels
                 labels = train_labels[start_idx:end_idx]
                 
                 # Zero the parameter gradients
@@ -34,6 +40,7 @@ def train_model(epochs=1, model=None, criterion=None, optimizer=None,
                 
                 # Forward pass
                 outputs = model(inputs)
+                # the loss function is also a parameter for this case cross-entropy loss
                 loss = criterion(outputs, labels)
                 
                 # Backward pass and optimization

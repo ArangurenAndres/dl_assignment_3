@@ -16,52 +16,78 @@ def load_json(file_path):
     with open(file_path,'r') as file:
         data = json.load(file)
     return data
+import os
+import pickle
 
-def save_list(data_list, results_path, exp_name,filename):
+def save_list(data_list, results_path, exp_name, filename):
     """
-    Save a list to a file in a specific folder.
-    
+    Save a list to a file in a specific folder using pickle.
+
     Args:
         data_list (list): The list to save.
-        folder_path (str): The folder where the file will be saved.
-        filename (str): The name of the file (e.g., 'output.txt').
+        results_path (str): The root folder for saving results.
+        exp_name (str): The experiment folder name.
+        filename (str): The name of the file (e.g., 'output.pkl').
     """
-
-    exp_path = os.path.join(results_path,exp_name)
-    # Ensure the folder exists, create if it doesn't
+    # Ensure the experiment folder exists
+    exp_path = os.path.join(results_path, exp_name)
     os.makedirs(exp_path, exist_ok=True)
+
     # Full path to the file
     file_path = os.path.join(exp_path, filename)
-    print(exp_path)
-    # Save the list to the file
-    with open(file_path, 'w') as f:
-        for item in data_list:
-            f.write(f"{item}\n")
-    
+
+    # Save the list using pickle
+    with open(file_path, 'wb') as f:
+        pickle.dump(data_list, f)
+
     print(f"List saved to {file_path}")
 
+
 class Data:
-    def __init__(self, batch_size=1, transform=None):
+    def __init__(self, batch_size=1, augment=False):
         self.batch_size = batch_size
-        self.transform = transform
         self.trainloader = None
         self.testloader = None
         self.train_data, self.train_labels = None, None
         self.val_data, self.val_labels = None, None
         self.test_data, self.test_labels = None, None
+        self.augment=augment
+        
+        self.transform_train = transforms.Compose([
+                transforms.RandomRotation(20),  #Random rotation up to 20 degrees
+                transforms.RandomHorizontalFlip(),  # Randomly flip images horizontally
+                transforms.RandomCrop(28, padding=4),  # Random cropping with padding
+                transforms.ToTensor()  # Convert to tensor
+                    ])
+        self.transform_test = transforms.Compose([
+                transforms.ToTensor() 
+                    ])
+        self.transform = transforms.ToTensor()
 
     def load_data(self):
         # Load training dataset
-        train = torchvision.datasets.MNIST(
-            root="./data", train=True, download=True, transform=self.transform
-        )
+        if self.augment:
+            train = torchvision.datasets.MNIST(
+                root="./data", train=True, download=True, transform=self.transform_train
+            )
+
+            # Load the test dataset
+            test = torchvision.datasets.MNIST(
+                root="./data", train=False, download=True, transform=self.transform_test
+            )
+        else:
+            train = torchvision.datasets.MNIST(
+                root="./data", train=True, download=True, transform=self.transform
+            )
+            # Load the test dataset
+            test = torchvision.datasets.MNIST(
+                root="./data", train=False, download=True, transform=self.transform
+            )
+        ## Once loaded the datasets create the dataloaders
+
         # Create train dataloader, set shuffle to true, this will help when performing the train validation split
         self.trainloader = torch.utils.data.DataLoader(
             train, batch_size=self.batch_size, shuffle=True, num_workers=2
-        )
-        # Load the test dataset
-        test = torchvision.datasets.MNIST(
-            root="./data", train=False, download=True, transform=self.transform
         )
         # Create test dataloader
         self.testloader = torch.utils.data.DataLoader(
@@ -100,7 +126,7 @@ class Data:
 
         return self.train_data, self.train_labels, self.val_data, self.val_labels, self.test_data, self.test_labels
     
-    
+
     def get_dataloaders(self):
         if self.train_data is None or self.val_data is None:
             raise ValueError("In-memory datasets are not initialized. Please call `create_in_memory_dataset()` first.")
@@ -115,7 +141,7 @@ class Data:
 
 if __name__ == "__main__":
     # Instantiate the class with desired parameters
-    data = Data(batch_size=64, transform=transforms.ToTensor())
+    data = Data(batch_size=64, augment=True)
 
     # Step 1: Load the train and test DataLoader objects
     train_loader, test_loader = data.load_data()

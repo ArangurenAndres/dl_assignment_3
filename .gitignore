@@ -8,4 +8,4 @@ data/MNIST/raw/train-labels-idx1-ubyte
 venv/
 data/
 models/__pycache__/
-*.pkl
+*.pyc
