@@ -8,7 +8,6 @@ def train_model_with_dataloaders(epochs=1, model=None, criterion=None, optimizer
                                  train_loader=None, val_loader=None):
     """
     Training function using PyTorch DataLoaders for train and validation datasets.
-    
     Args:
         epochs (int): Number of training epochs.
         model (torch.nn.Module): The model to train.
