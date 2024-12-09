@@ -8,6 +8,8 @@ import json
 from torch.utils.data import DataLoader, TensorDataset
 import pickle
 import os
+import matplotlib.pyplot as plt
+
 
 ## Question 7. Part 1 , create Train, val datasets 
 
@@ -54,9 +56,12 @@ class Data:
         self.augment=augment
         
         self.transform_train = transforms.Compose([
-                transforms.RandomRotation(20),  #Random rotation up to 20 degrees
-                transforms.RandomHorizontalFlip(),  # Randomly flip images horizontally
-                transforms.RandomCrop(28, padding=4),  # Random cropping with padding
+                transforms.RandomRotation(45),  #Random rotation up to 20 degrees
+                transforms.RandomHorizontalFlip(p=0.5),  # Randomly flip images horizontally
+                transforms.RandomVerticalFlip(p=0.5),
+                #Apply gaussian blur to the image
+                transforms.GaussianBlur(kernel_size=(3, 3), sigma=(0.5, 2.0)),
+                #transforms.RandomCrop(25, padding=7),  # Random cropping with padding
                 transforms.ToTensor()  # Convert to tensor
                     ])
         self.transform_test = transforms.Compose([
@@ -145,14 +150,29 @@ if __name__ == "__main__":
 
     # Step 1: Load the train and test DataLoader objects
     train_loader, test_loader = data.load_data()
-    ## Question 7. Part 1
+    train_batch = iter(train_loader)
+    images, labels = next(train_batch)
+
+    # Step 3: Plot a grid of images
+    fig, axes = plt.subplots(2, 2, figsize=(8, 8))
+    fig.suptitle("Data Augmentation Examples", fontsize=16)
+    for i, ax in enumerate(axes.flat):
+        if i < len(images):
+            img = images[i].squeeze(0).numpy()  # Remove channel dimension and convert to numpy
+            ax.imshow(img, cmap="gray")
+            ax.set_title(f"Label: {labels[i].item()}")
+            ax.axis("off")
+    plt.tight_layout()
+    plt.show()
+    
+
 
     # Step 2: Create in-memory datasets
-    train_data, train_labels, val_data, val_labels, test_data, test_labels = data.create_in_memory_dataset()
+    #train_data, train_labels, val_data, val_labels, test_data, test_labels = data.create_in_memory_dataset()
 
-    print(f"Train data shape: {train_data.shape}, Train labels shape: {train_labels.shape}")
-    print(f"Validation data shape: {val_data.shape}, Validation labels shape: {val_labels.shape}")
-    print(f"Test data shape: {test_data.shape}, Test labels shape: {test_labels.shape}")
+    #print(f"Train data shape: {train_data.shape}, Train labels shape: {train_labels.shape}")
+    #print(f"Validation data shape: {val_data.shape}, Validation labels shape: {val_labels.shape}")
+    #print(f"Test data shape: {test_data.shape}, Test labels shape: {test_labels.shape}")
 
 
 
