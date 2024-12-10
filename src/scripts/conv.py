@@ -32,7 +32,6 @@ class Conv2D(nn.Module):
 
         # Initialize a zero tensor for padding
         x_padded = torch.zeros((b, c, padded_h, padded_w), device=x.device, dtype=x.dtype)
-
         # Copy the original image into the padded tensor
         x_padded[:, :, self.padding:self.padding + h, self.padding:self.padding + w] = x
 

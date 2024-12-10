@@ -17,7 +17,7 @@
 ```bash
     git pull
     git branch <branch_name>
-    git checkout -b <branch_name>
+    git checkout <branch_name>
 ```
 
 ## Part 2: Implementing a simple Convolutional classfier
