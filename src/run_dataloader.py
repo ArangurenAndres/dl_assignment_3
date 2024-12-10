@@ -52,8 +52,8 @@ class Run():
        
 if __name__ == "__main__":
     # In this line specify the path of the config file you are implementing
-    config_path = "experiments/config_files_dataloader/config_augmentation_1.json"
-    print(f"1. Loading model hpyerparameters") 
+    config_path = "/Users/irizabaranyanka/Desktop/Period_2/Deep_Learning/dl_assignment_3/experiments/config_files_dataloader/config_baseline.json"
+    print(f"1. Loading model hyperparameters")
     run = Run(config_path=config_path,save_metrics=True)
     #save the train, val loss 
     train_loss,val_loss, val_accuracy= run.run_model()

@@ -80,8 +80,8 @@ class Plot:
 
 if __name__ == "__main__":
     #insert here the results path folder containing all the experiments resutls
-    results_path = "experiments/results"
-    exp_name = "exp_augmentation_dl_1"
+    results_path = "/Users/irizabaranyanka/Desktop/Period_2/Deep_Learning/dl_assignment_3/experiments/results"
+    exp_name = "exp_baseline_part3"
     data = Plot(results_path,exp_name)
     accuracy = data.load_pickle_file("val_accuracy.pkl")
     print(accuracy)

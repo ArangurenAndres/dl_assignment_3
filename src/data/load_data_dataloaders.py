@@ -27,7 +27,7 @@ class TransformData:
 def get_train_val_dataloaders(batch_size):
     train_transform = transforms.Compose([
         #transforms.RandomRotation(45),
-        transforms.RandomHorizontalFlip(p=0.5),
+        #transforms.RandomHorizontalFlip(p=0.5),
         #transforms.RandomVerticalFlip(p=0.5),
         #transforms.GaussianBlur(kernel_size=(3, 3), sigma=(0.5, 2.0)),
         transforms.ToTensor()

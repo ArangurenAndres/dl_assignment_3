@@ -1,0 +1,10 @@
+{
+    "results_path":"/Users/irizabaranyanka/Desktop/Period_2/Deep_Learning/dl_assignment_3/experiments/results",
+    "exp_name":"exp_baseline_part3",
+    "augmentation":false,
+    "lr": 0.001,
+    "epochs":10,
+    "batch_size":16,
+    "data_dir": "/Users/irizabaranyanka/Desktop/Period_2/Deep_Learning/dl_assignment_3/mnist-varres"
+
+}

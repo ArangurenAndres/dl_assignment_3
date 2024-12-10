@@ -8,4 +8,6 @@ dataset/
 *.dylib
 venv/
 models/__pycache__/
-
+dataset/mnist-varres/test
+dataset/mnist-varres/train
+*.png
