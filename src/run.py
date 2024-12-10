@@ -5,13 +5,14 @@ import os
 import torch.nn as nn
 import torchvision.transforms as transforms
 import torch.optim as optim
-from data.load_data import Data, load_json, save_list
+from data.load_data import Data, load_json, save_list, save_model
 from models.model import Net
 from train.train import train_model
+import torch
 
 
 class Run(Data):
-    def __init__(self,config_path = None, save_metrics = False):
+    def __init__(self,config_path = None, save_metrics = False,save_model=True):
         # Assign config file values to class attributes
 
         self.config_file = load_json(config_path)
@@ -20,7 +21,9 @@ class Run(Data):
         self.batch_size = self.config_file["batch_size"]
         self.learning_rate = self.config_file["lr"]
         self.results_path = self.config_file["results_path"]
-        self.exp_name = self.config_file["exp_name"]     
+        self.model_path = self.config_file["model_path"]
+        self.exp_name = self.config_file["exp_name"]   
+        self.save_model = save_model
         self.save_metrics = save_metrics   
         super().__init__(batch_size=self.batch_size, augment = self.augmentation)
 
@@ -44,13 +47,17 @@ class Run(Data):
         train_loss,val_loss, val_accuracy = train_model(epochs=self.epochs, model=model, criterion=criterion, optimizer=optimizer, 
                 train_data=self.train_data, train_labels=self.train_labels, val_data=self.val_data, val_labels=self.val_labels, 
                batch_size=self.batch_size)
+        # Aftre training save the model
+        if self.save_model:
+            print(f"Saving model weights...")
+            save_model(model,self.model_path, self.exp_name,"model_weights.pth")
         #save train and validation loss
         if self.save_metrics:
             print(f"5.Saving training and validation losses...")
             save_list(train_loss, self.results_path, self.exp_name,"train_loss.pkl")
             save_list(val_loss, self.results_path, self.exp_name,"val_loss.pkl")
             save_list(val_accuracy, self.results_path, self.exp_name,"val_accuracy.pkl")
-            print(f"6. Metrics were saved. Training is concluded :)")
+            print(f"6. Metrics were save©©d. Training is concluded :)")
         else:
             print(f"Training concluded.")
     
@@ -58,10 +65,10 @@ class Run(Data):
        
 if __name__ == "__main__":
     # In this line specify the path of the config file you are implementing
-    config_path = "experiments/config_files/config_augmentation_8.json"
+    config_path = "experiments/config_files/config_augmentation_1.json"
     print(f"1. Loading model hpyerparameters") 
     run = Run(config_path=config_path,save_metrics=True)
-    #save the train, val loss 
+    #save the train, val loss
     train_loss,val_loss, val_accuracy= run.run_model()
 
 

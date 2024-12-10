@@ -69,7 +69,6 @@ def train_model(epochs=1, model=None, criterion=None, optimizer=None,
                     end_idx = start_idx + batch_size
                     inputs = val_data[start_idx:end_idx]
                     labels = val_labels[start_idx:end_idx]
-
                     # Forward pass
                     outputs = model(inputs)
                     loss = criterion(outputs, labels)

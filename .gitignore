@@ -8,4 +8,5 @@ dataset/
 *.dylib
 venv/
 models/__pycache__/
+*.pth
 

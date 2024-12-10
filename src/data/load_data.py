@@ -21,6 +21,16 @@ def load_json(file_path):
 import os
 import pickle
 
+
+def save_model(model, model_path,exp_name,filename):
+    model_temp_path = os.path.join(model_path,exp_name)
+    #create folder where model will be stored
+    os.makedirs(model_temp_path,exist_ok=True)
+    # Set the filename
+    file_path = os.path.join(model_temp_path,filename)
+    torch.save(model.state_dict(),file_path)
+    print(f"Model save to {file_path}")
+
 def save_list(data_list, results_path, exp_name, filename):
     """
     Save a list to a file in a specific folder using pickle.
@@ -56,9 +66,9 @@ class Data:
         self.augment=augment
         
         self.transform_train = transforms.Compose([
-                transforms.RandomRotation(45),  #Random rotation up to 20 degrees
-                transforms.RandomHorizontalFlip(p=0.5),  # Randomly flip images horizontally
-                transforms.RandomVerticalFlip(p=0.5),
+                #transforms.RandomRotation(45),  #Random rotation up to 20 degrees
+                #transforms.RandomHorizontalFlip(p=0.5),  # Randomly flip images horizontally
+                #transforms.RandomVerticalFlip(p=0.5),
                 #Apply gaussian blur to the image
                 transforms.GaussianBlur(kernel_size=(3, 3), sigma=(0.5, 2.0)),
                 #transforms.RandomCrop(25, padding=7),  # Random cropping with padding
