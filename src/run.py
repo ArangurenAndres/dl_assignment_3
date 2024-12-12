@@ -65,7 +65,7 @@ class Run(Data):
        
 if __name__ == "__main__":
     # In this line specify the path of the config file you are implementing
-    config_path = "experiments/config_files/config_augmentation_1.json"
+    config_path = "experiments/config_files/config_baseline_exp_4.json"
     print(f"1. Loading model hpyerparameters") 
     run = Run(config_path=config_path,save_metrics=True)
     #save the train, val loss

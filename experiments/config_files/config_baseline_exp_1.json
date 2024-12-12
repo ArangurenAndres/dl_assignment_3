@@ -3,10 +3,7 @@
     "exp_name":"exp_1_baseline",
     "model_path":"experiments/models",
     "augmentation":false,
-    "lr": 0.001,
+    "lr": 0.01,
     "epochs":10,
     "batch_size":16
 }
-
-
-

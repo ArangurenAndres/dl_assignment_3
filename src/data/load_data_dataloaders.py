@@ -69,6 +69,7 @@ if __name__ == "__main__":
     fig.suptitle("Data Augmentation Examples", fontsize=16)
     for i, ax in enumerate(axes.flat):
         if i < len(images):
+            print(images[i].shape)
             img = images[i].squeeze(0).numpy()  # Remove channel dimension and convert to numpy
             ax.imshow(img, cmap="gray")
             ax.set_title(f"Label: {labels[i].item()}")

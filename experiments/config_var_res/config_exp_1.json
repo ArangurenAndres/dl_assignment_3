@@ -1,0 +1,14 @@
+{
+    "results_path":"experiments/results/results_var_res",
+    "exp_name":"exp_4_layers",
+    "model_path":"experiments/models_var_res",
+    "augmentation":false,
+    "target_size":28,
+    "lr": 0.001,
+    "epochs":10,
+    "batch_size":16
+
+}
+
+
+

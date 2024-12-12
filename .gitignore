@@ -9,4 +9,6 @@ dataset/
 venv/
 models/__pycache__/
 *.pth
+*.png
+
 

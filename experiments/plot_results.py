@@ -29,7 +29,7 @@ class Plot:
         return list_value
     
     def plot_accuracy(self):
-        val_acc = self.load_pickle_file("val_accuracy.pkl")
+        val_acc = self.load_pickle_file("combined_val_accuracy.pkl")
         #Print the last accuracy
         print(f"Validation accuracy: {val_acc[-1]} ")
         # Plot the losses directly
@@ -55,8 +55,8 @@ class Plot:
         results_path (str): Path to the folder containing experiment results.
         exp_name (str): Experiment name (subfolder in results_path).
         """
-        train_loss = self.load_pickle_file("train_loss.pkl")
-        val_loss = self.load_pickle_file("val_loss.pkl")
+        train_loss = self.load_pickle_file("combined_train_loss.pkl")
+        val_loss = self.load_pickle_file("combined_val_loss.pkl")
         # Ensure the lengths match
         assert len(train_loss) == len(val_loss), "Mismatch in number of epochs for train and validation loss."
         # Use Seaborn colors for nicer tones
@@ -80,10 +80,10 @@ class Plot:
 
 if __name__ == "__main__":
     #insert here the results path folder containing all the experiments resutls
-    results_path = "experiments/results"
-    exp_name = "exp_augmentation_dl_1"
+    results_path = "experiments/results/results_var_res"
+    exp_name = "exp_1_max"
     data = Plot(results_path,exp_name)
-    accuracy = data.load_pickle_file("val_accuracy.pkl")
+    accuracy = data.load_pickle_file("combined_val_accuracy.pkl")
     print(accuracy)
     print(f"Validation accuracy: {accuracy[-1]}")
     data.plot_loss()

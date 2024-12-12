@@ -1,12 +1,9 @@
 {
     "results_path":"experiments/results",
-    "exp_name":"exp_1_baseline",
+    "exp_name":"exp_6_baseline",
     "model_path":"experiments/models",
     "augmentation":false,
     "lr": 0.001,
     "epochs":10,
-    "batch_size":16
+    "batch_size":64
 }
-
-
-
